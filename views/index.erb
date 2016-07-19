@@ -1,5 +1,5 @@
 <div class="col-sm-6">
-  <h3>List of current Purchases</h3>
+  <h3><span class="glyphicon glyphicon-flag"></span> List of current Purchases</h3>
   <% if @purchases.any?() %>
     <ul>
       <% @purchases.each() do |purchase| %>
@@ -9,9 +9,6 @@
   <% else %>
     <h4>No Purchases created yet</h4>
   <% end %>
-  <p>
-    <a href="/create">Add Purchases or Products</a>
-  </p>
 </div>
 
 <div class="col-sm-6">
@@ -45,4 +42,51 @@
     </div>
     <button type="submit" class="btn btn-lg btn-danger">Add products to purchase</button>
   </form>
+</div>
+<div class="row container">
+  <div class="col-sm-6">
+    <hr>
+    <h3>Delete a Purchase</h3>
+    <form class="well" action="/delete_purchase" method="post">
+      <input type="hidden" name="_method" value="delete">
+      <% if @purchases.any?() %>
+        <select class="form-control" name="delete_this">
+          <% @purchases.each() do |purchase| %>
+            <option value="<%= purchase.id() %>"><%= purchase.name() %></option>
+          <% end %>
+        </select>
+      <% else %>
+        <h4>No Purchases created yet</h4>
+      <% end %>
+      <button type="submit" class="btn btn-lg btn-danger">Delete Purchase</button>
+    </form>
+    <p><a href="/create">Add Purchases or Products</a></p>
+  </div>
+  <div class="col-sm-6">
+    <hr>
+    <h3>Products already sold</h3>
+    <div class="col-sm-5">
+      <% if @products_sold.any?() %>
+        <ol>
+          <% @products_sold.each() do |product| %>
+            <li><a href="/product/<%= product.id() %>">Delete</a> || <%= product.name() %></li>
+          <% end %>
+        </ol>
+      <% else %>
+        <h4>No Products sold yet</h4>
+      <% end %>
+      <% if @product_deleted %>
+      <h4><%= @product_deleted.name() %> has been deleted!</h4>
+      <% end %>
+    </div>
+    <div class="col-sm-1">
+      <% if @purchase_ids %>
+        <ul class="arrow">
+          <% @purchase_ids.each() do |purchase| %>
+            <li><%= purchase.name() %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
 </div>

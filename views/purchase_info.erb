@@ -1,4 +1,4 @@
-<h2>This Purchase <%= %> has these Products:</h2>
+<h2>This Purchase <em><%= @purchase.name() %></em> has these Products:</h2>
 <% if @products.length != 0 %>
 <ul>
   <% @products.each() do |product| %>
@@ -6,7 +6,7 @@
   <% end %>
 </ul>
 <% else %>
-  <h3>This purchase did not have any items!</h3>
+  <h3>This purchase does not have any items!</h3>
 <% end %>
 
 <a href="/">Back to Main</a>

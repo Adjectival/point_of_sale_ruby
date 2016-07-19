@@ -2,3 +2,7 @@
   text-align: center;
   font-family: monospace;
 }
+
+.arrow {
+  list-style-type: lower-alpha;
+}

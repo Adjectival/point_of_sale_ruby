@@ -5,16 +5,29 @@ require('sinatra/activerecord')
 require('./lib/purchase')
 require('./lib/product')
 require('pg')
+require 'pry'
 
 get('/') do
-  products = Product.all()
+  @products = Product.all()
   @products_available = []
-  products.each() do |product|
+  @products.each() do |product|
     if product.purchase_id() == nil
       @products_available << product
     end
   end
   @products_available
+  @products_sold = []
+  @products.each() do |product|
+    if product.purchase_id() != nil
+      @products_sold << product
+    end
+  end
+  @purchase_ids = []
+  @products_sold.each() do |product|
+    purchase_id = product.purchase_id()
+    @purchase_ids << Purchase.find(purchase_id)
+  end
+  @purchase_ids
   @purchases = Purchase.all()
   erb(:index)
 end
@@ -46,6 +59,7 @@ patch('/add_products_to_purchase') do
   products.each() do |product|
     product.update({:purchase_id => purchase_id})
   end
+redirect to('/')
 end
 
 get('/purchase/:id') do
@@ -60,4 +74,38 @@ get('/purchase/:id') do
   end
   @products
   erb(:purchase_info)
+end
+
+get('/product/:id') do
+  product_id = params.fetch('id').to_i
+  @product_deleted = Product.find(product_id)
+  @product_deleted.destroy()
+  @products = Product.all()
+  @purchases = Purchase.all()
+  @products_available = []
+  @products.each() do |product|
+    if product.purchase_id() == nil
+      @products_available << product
+    end
+  end
+  @products_sold = []
+  @products.each() do |product|
+    if product.purchase_id() != nil
+      @products_sold << product
+    end
+  end
+  @purchase_ids = []
+  @products_sold.each() do |product|
+    purchase_id = product.purchase_id()
+    @purchase_ids << Purchase.find(purchase_id)
+  end
+  @purchase_ids
+  @products_available
+  erb(:index)
+end
+
+delete("/delete_purchase") do
+  purchase_to_delete = Purchase.find(params.fetch("delete_this").to_i)
+  purchase_to_delete.destroy
+  redirect("/")
 end
