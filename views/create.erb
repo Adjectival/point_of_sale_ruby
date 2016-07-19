@@ -9,6 +9,9 @@
     </div>
     <button type="submit" class="btn btn-lg btn-primary">Create Purchase Record</button>
   </form>
+  <% if @purchase %>
+    <h4><%= @purchase.name() %> has been created</h4>
+  <% end %>
 </div>
 <div class="col-sm-6">
   <form class="well" action="/create_product" method="post">
@@ -18,8 +21,11 @@
     </div>
     <div class="form-group">
       <label for="product_price">Enter Product Price</label>
-      <input type="text" name="product_price">
+      <input type="float" name="product_price">
     </div>
     <button type="submit" class="btn btn-lg btn-info">Create Product</button>
   </form>
+  <% if @product %>
+    <h4><%= @product.name() %> has been created with the value of <%= @product.price() %></h4>
+  <% end %>
 </div>
