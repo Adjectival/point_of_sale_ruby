@@ -1,0 +1,44 @@
+<div class="col-sm-6">
+  <h3>List of current Purchases</h3>
+  <% if @purchases.any?() %>
+    <ul>
+      <% @purchases.each() do |purchase| %>
+        <li><a href="/purchase/<%= purchase.id() %>"><%= purchase.name() %></a></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <h4>No Purchases created yet</h4>
+  <% end %>
+  <p>
+    <a href="/create">Add Purchases or Products</a>
+  </p>
+</div>
+
+<div class="col-sm-6">
+  <div>
+    <h3>Available to Buy!</h3>
+    <% if @products_available.any?() %>
+        <% @products_available.each() do |product| %>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="product_ids[]" value="<%= product.id() %>"><%= product.name()%>, $<%= product.price() %>
+            </label>
+          </div>
+        <% end %>
+    <% else %>
+      <h4>Please go buy more for your inventory!</h4>
+    <% end %>
+  </div>
+  <div>
+    <h3>Select a Purchase to add items to</h3>
+    <% if @purchases.any?() %>
+      <select class="form-control" name="buy_these">
+        <% @purchases.each() do |purchase| %>
+          <option value="<%= purchase.id() %>"><%= purchase.name() %></option>
+        <% end %>
+      </select>
+    <% else %>
+      <h4>No Purchases created yet</h4>
+    <% end %>
+  </div>
+</div>
