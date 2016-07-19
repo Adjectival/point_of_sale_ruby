@@ -9,5 +9,4 @@ private
       product.update({:purchase_id => nil})
     end
   end
-
 end

@@ -3,7 +3,7 @@
   <% if @purchases.any?() %>
     <ul>
       <% @purchases.each() do |purchase| %>
-        <li><a href="/purchase/<%= purchase.id() %>"><%= purchase.name() %></a></li>
+        <li><a href="/purchase/<%= purchase.id() %>"><%= purchase.name() %></a> || <%= purchase.created_at() %> || <%= purchase.sum() %></li>
       <% end %>
     </ul>
   <% else %>
@@ -60,7 +60,7 @@
       <% end %>
       <button type="submit" class="btn btn-lg btn-danger">Delete Purchase</button>
     </form>
-    <p><a href="/create">Add Purchases or Products</a></p>
+    <p><a href="/create" class="btn btn-lg btn-success">Add Purchases or Products</a></p>
   </div>
   <div class="col-sm-6">
     <hr>
